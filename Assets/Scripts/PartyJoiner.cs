@@ -20,7 +20,7 @@ public class PartyJoiner : MonoBehaviour
     [SerializeField]
     private Button joinButton;
 
-    public string remotePlayerName;
+    public int remotePlayerID;
 
     public PhotonPlayer remotePlayer;
 
@@ -38,10 +38,6 @@ public class PartyJoiner : MonoBehaviour
     [PunRPC]
     public void Test()
     {
-        //print(photonView.name + " HAVE BEEN TESTED!");// my local client told Remote to say MY name, because in this function I'm printing MY name
-        //print("photon view name: " + photonView.name);
-
-
         print("IM THE TARGET");
     }
 
@@ -54,21 +50,15 @@ public class PartyJoiner : MonoBehaviour
     // this button press will always be local because the remote clients canvases are disabled
     public void OnInviteButtonPress()
     {
-        //print(gameObject.name + "pressed invite button");
-        //photonView.RPC("Test", PhotonPlayer.Find(playerToInviteID)); // this is passed to other player
-
-        photonView.RPC("AllTest", PhotonTargets.All);
-        //photonView.RPC("Test", )
+        if(remotePlayerID != -1)
+        {
+            photonView.RPC("Test", PhotonPlayer.Find(remotePlayerID));
+        }
     }
 
     public void OnJoinButtonPress()
     {
-        print("join button");
 
-        if(photonView.isMine)
-        {
-            print("MY jion");
-        }
     }
 
     // this scripts fire everywhere
@@ -76,50 +66,30 @@ public class PartyJoiner : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!photonView.isMine)
-            return;
-
-        
-
-        if(other.CompareTag("Player"))
         {
+            return;
+        }
 
-            print("I bumped into: " + other.name);
-            int id;
-            id = PhotonView.Get(other.gameObject).ownerId;
-            photonView.RPC("Test", PhotonPlayer.Find(id));
-
-            
-            
-            //print("test 1");
-            
-            //id = PhotonView.Get(other.gameObject).viewID;
-            //photonView.RPC("Test", PhotonPlayer.Find(id), id);
-            //print("test 2");
-
-            
-
-            //remotePlayerName = PhotonView.Get(other.gameObject).GetInstanceID().ToString();
-            //print("PhotonView.Get.GetInstanceID: " + remotePlayerName);
-
-            //remotePlayerName = PhotonView.Get(other.gameObject).name.ToString();
-            //print("PhotonView.Get.viewId: " + remotePlayerName);
-
-            //playerToInviteID = PhotonPlayer.;
-
-            //inviteButton.interactable = true;
+        if (other.CompareTag("Player"))
+        {
+            print("I bumped into: " + other.name);   
+            remotePlayerID = PhotonView.Get(other.gameObject).ownerId;
+            inviteButton.interactable = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-
+        if(!photonView.isMine)
+        {
+            return;
+        }
 
         if(other.CompareTag("Player"))
         {
-            
-            //playerToInviteID = -1;
+            remotePlayerID = -1;    
 
-            //inviteButton.interactable = false;
+            inviteButton.interactable = false;
         }
     }
 }
