@@ -22,6 +22,8 @@ public class PartyJoiner : MonoBehaviour
 
     public string remotePlayerName;
 
+    public PhotonPlayer remotePlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,16 +36,13 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
-    public void Test(int remoteID)
+    public void Test()
     {
         //print(photonView.name + " HAVE BEEN TESTED!");// my local client told Remote to say MY name, because in this function I'm printing MY name
         //print("photon view name: " + photonView.name);
 
-        if(!photonView.isMine)
-        {
-            print(PhotonPlayer.Find(remoteID).ID);
-        }
-        
+
+        print("IM THE TARGET");
     }
 
     [PunRPC]
@@ -55,10 +54,11 @@ public class PartyJoiner : MonoBehaviour
     // this button press will always be local because the remote clients canvases are disabled
     public void OnInviteButtonPress()
     {
-        print(gameObject.name + "pressed invite button");
+        //print(gameObject.name + "pressed invite button");
         //photonView.RPC("Test", PhotonPlayer.Find(playerToInviteID)); // this is passed to other player
 
         photonView.RPC("AllTest", PhotonTargets.All);
+        //photonView.RPC("Test", )
     }
 
     public void OnJoinButtonPress()
@@ -85,7 +85,10 @@ public class PartyJoiner : MonoBehaviour
             //print(other.name);
             int id;
             id = PhotonView.Get(other.gameObject).ownerId;
-            photonView.RPC("Test", PhotonPlayer.Find(id), id);
+            photonView.RPC("Test", PhotonPlayer.Find(id));
+
+            
+            
             //print("test 1");
             
             //id = PhotonView.Get(other.gameObject).viewID;
