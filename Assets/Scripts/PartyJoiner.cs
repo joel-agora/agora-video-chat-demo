@@ -29,7 +29,7 @@ public class PartyJoiner : MonoBehaviour
 
         if(!photonView.isMine)
         {
-            //transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
