@@ -82,7 +82,8 @@ public class PartyJoiner : MonoBehaviour
 
         if(other.CompareTag("Player"))
         {
-            //print(other.name);
+
+            print("I bumped into: " + other.name);
             int id;
             id = PhotonView.Get(other.gameObject).ownerId;
             photonView.RPC("Test", PhotonPlayer.Find(id));
