@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 114965449611606356}
   - component: {fileID: 114431670257695358}
   - component: {fileID: 135247917694409704}
+  - component: {fileID: 114441957375878560}
   m_Layer: 0
   m_Name: Charprefab
   m_TagString: Player
@@ -191,7 +192,6 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 11400010}
-  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -239,10 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77931ee498be240ed9d8a624e352f3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCanvas: {fileID: 0}
   inviteButton: {fileID: 4454070465173561753}
   joinButton: {fileID: 8200248810429918849}
-  playerToInviteID: 0
+  remotePlayerName: 
 --- !u!135 &135247917694409704
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -256,6 +255,23 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114441957375878560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3e085897700471495b14757e567fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localGameObjects:
+  - {fileID: 4024445271744060198}
+  localComponents:
+  - {fileID: 114965449611606356}
+  - {fileID: 114431670257695358}
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 0
