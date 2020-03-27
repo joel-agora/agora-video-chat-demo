@@ -39,7 +39,11 @@ public class PartyJoiner : MonoBehaviour
         //print(photonView.name + " HAVE BEEN TESTED!");// my local client told Remote to say MY name, because in this function I'm printing MY name
         //print("photon view name: " + photonView.name);
 
-        print(PhotonPlayer.Find(remoteID).NickName);
+        if(!photonView.isMine)
+        {
+            print(PhotonPlayer.Find(remoteID).ID);
+        }
+        
     }
 
     [PunRPC]
@@ -84,8 +88,8 @@ public class PartyJoiner : MonoBehaviour
             photonView.RPC("Test", PhotonPlayer.Find(id), id);
             //print("test 1");
             
-            id = PhotonView.Get(other.gameObject).viewID;
-            photonView.RPC("Test", PhotonPlayer.Find(id), id);
+            //id = PhotonView.Get(other.gameObject).viewID;
+            //photonView.RPC("Test", PhotonPlayer.Find(id), id);
             //print("test 2");
 
             
