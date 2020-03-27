@@ -19,10 +19,11 @@ public class PartyJoiner : MonoBehaviour
     private Button inviteButton;
     [SerializeField]
     private Button joinButton;
+    [SerializeField]
+    private int remotePlayerID;
 
-    public int remotePlayerID;
-
-    public PhotonPlayer remotePlayer;
+    [SerializeField]
+    private string remoteInviteChannelName;
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +34,16 @@ public class PartyJoiner : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
+
+        inviteButton.interactable = false;
+        joinButton.interactable = false;
     }
 
     [PunRPC]
-    public void Test()
+    public void Test(string channelName)
     {
         print("IM THE TARGET");
+        joinButton.interactable = true;
     }
 
     [PunRPC]
@@ -52,13 +57,13 @@ public class PartyJoiner : MonoBehaviour
     {
         if(remotePlayerID != -1)
         {
-            photonView.RPC("Test", PhotonPlayer.Find(remotePlayerID));
+            photonView.RPC("Test", PhotonPlayer.Find(remotePlayerID), "testChannel");
         }
     }
 
     public void OnJoinButtonPress()
     {
-
+        print("I'm going to join players channel: ");
     }
 
     // this scripts fire everywhere
