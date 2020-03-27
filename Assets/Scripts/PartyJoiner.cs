@@ -40,8 +40,9 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
-    public void Test(string channelName)
+    public void InvitePlayerToPartyChannel(string channelName)
     {
+        remoteInviteChannelName = channelName;
         print("I've been invited to join channel: " + channelName);
         joinButton.interactable = true;
     }
@@ -57,13 +58,14 @@ public class PartyJoiner : MonoBehaviour
     {
         if(remotePlayerID != -1)
         {
-            photonView.RPC("Test", PhotonPlayer.Find(remotePlayerID), "testChannel");
+            photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), "testChannel");
         }
     }
 
     public void OnJoinButtonPress()
     {
-        print("I'm going to join players channel: ");
+        print("I'm going to join players channel: " + remoteInviteChannelName);
+        // AGORA COMPONENT.JoinChannel(remoteInviteChannelName);
     }
 
     // this scripts fire everywhere
