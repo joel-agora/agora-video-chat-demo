@@ -42,7 +42,7 @@ public class PartyJoiner : MonoBehaviour
     [PunRPC]
     public void Test(string channelName)
     {
-        print("IM THE TARGET");
+        print("I've been invited to join channel: " + channelName);
         joinButton.interactable = true;
     }
 
