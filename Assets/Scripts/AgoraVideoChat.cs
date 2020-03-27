@@ -4,9 +4,9 @@ using UnityEngine;
 using agora_gaming_rtc;
 using agora_utilities;
 using UnityEngine.UI;
+using Photon;
 
-
-public class AgoraVideoChat : MonoBehaviour
+public class AgoraVideoChat : Photon.MonoBehaviour
 {
     [SerializeField]
     private string appID = "57481146914f4cddaa220d6f7a045063";
@@ -23,8 +23,12 @@ public class AgoraVideoChat : MonoBehaviour
     public Vector3 videoFramePosition;
     public float newVideoFrameOffsetAmount = 140;
 
+    private PhotonView pView;
+
     void Start()
     {
+        pView = GetComponent<PhotonView>();
+
         if(mRtcEngine != null)
         {
             IRtcEngine.Destroy();
@@ -80,11 +84,13 @@ public class AgoraVideoChat : MonoBehaviour
         print("userCount: " + currentUsers);
 
         Destroy(GameObject.Find(uid.ToString()));
-        currentUsers--;
     }
 
     VideoSurface CreateUserVideoSurface(uint uid, Vector3 spawnPosition, bool isLocalUser)
     {
+        if (!pView.isMine)
+            return null;
+
         GameObject newUserVideo = new GameObject(uid.ToString(), typeof(RawImage), typeof(VideoSurface));
         if(newUserVideo == null)
         {
@@ -107,6 +113,8 @@ public class AgoraVideoChat : MonoBehaviour
         {
             newVideoSurface.SetForUser(uid);
         }
+
+        print(gameObject.name + " creating new video surface for: " + uid);
 
         newVideoSurface.SetGameFps(30);
 

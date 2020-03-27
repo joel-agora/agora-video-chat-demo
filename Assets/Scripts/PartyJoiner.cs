@@ -29,7 +29,7 @@ public class PartyJoiner : MonoBehaviour
 
         if(!photonView.isMine)
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            //transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -42,6 +42,16 @@ public class PartyJoiner : MonoBehaviour
     public void OnInviteButtonPress()
     {
         photonView.RPC("Test", PhotonPlayer.Find(playerToInviteID));
+    }
+
+    public void OnJoinButtonPress()
+    {
+        print("join button");
+
+        if(photonView.isMine)
+        {
+            print("MY jion");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
