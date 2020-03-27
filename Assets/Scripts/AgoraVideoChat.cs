@@ -1,0 +1,129 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using agora_gaming_rtc;
+using agora_utilities;
+using UnityEngine.UI;
+
+
+public class AgoraVideoChat : MonoBehaviour
+{
+    [SerializeField]
+    private string appID = "57481146914f4cddaa220d6f7a045063";
+    [SerializeField]
+    private string channel = "unity3d";
+    private IRtcEngine mRtcEngine;
+
+    [Header("Misc.")]
+    [SerializeField]
+    private uint myUID = 0;
+    public int currentUsers = 0;
+    
+
+    public Vector3 videoFramePosition;
+    public float newVideoFrameOffsetAmount = 140;
+
+    void Start()
+    {
+        if(mRtcEngine != null)
+        {
+            IRtcEngine.Destroy();
+        }
+
+        mRtcEngine = IRtcEngine.GetEngine(appID);
+
+        mRtcEngine.OnJoinChannelSuccess = OnJoinChannelSuccessHandler;
+        mRtcEngine.OnUserJoined = OnUserJoinedHandler;
+        mRtcEngine.OnLeaveChannel = OnLeaveChannelHandler;
+        mRtcEngine.OnUserOffline = OnUserOfflineHandler;
+
+        mRtcEngine.EnableVideo();
+        mRtcEngine.EnableVideoObserver();
+
+        mRtcEngine.JoinChannel(channel, null, 0);
+    }
+
+    // local client joins
+    void OnJoinChannelSuccessHandler(string channelName, uint uid, int elapsed)
+    {
+        print("local user joined - channel: " + channelName + " - uid: " + uid + " - elapsed: " + elapsed);
+        myUID = uid;
+
+        CreateUserVideoSurface(uid, videoFramePosition + (Vector3.right * currentUsers), true);
+
+        print("userCount: " + currentUsers);
+    }
+
+    // remote client joins
+    void OnUserJoinedHandler(uint uid, int elapsed)
+    {
+        print("remote user joined - uid: " + uid + " - elapsed: " + elapsed);
+
+        CreateUserVideoSurface(uid, videoFramePosition + (Vector3.right * currentUsers), false);
+
+        print("userCount: " + currentUsers);
+    }
+
+    // user leaves
+    void OnLeaveChannelHandler(RtcStats stats)
+    {
+        print("User left");
+        currentUsers--;
+    }
+
+    // when remote user leaves the channel
+    void OnUserOfflineHandler(uint uid, USER_OFFLINE_REASON reason)
+    {
+        print("remote user offline - uid: " + uid + " - reason: " + reason);
+
+        currentUsers--;
+        print("userCount: " + currentUsers);
+
+        Destroy(GameObject.Find(uid.ToString()));
+        currentUsers--;
+    }
+
+    VideoSurface CreateUserVideoSurface(uint uid, Vector3 spawnPosition, bool isLocalUser)
+    {
+        GameObject newUserVideo = new GameObject(uid.ToString(), typeof(RawImage), typeof(VideoSurface));
+        if(newUserVideo == null)
+        {
+            return null;
+        }
+
+        newUserVideo.transform.parent = transform.GetChild(0);
+        newUserVideo.GetComponent<RectTransform>().anchoredPosition = spawnPosition + (Vector3.right * currentUsers * newVideoFrameOffsetAmount);
+        newUserVideo.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 120);
+        newUserVideo.transform.rotation = Quaternion.Euler(Vector3.right * -180);
+        newUserVideo.transform.localScale = Vector3.one;
+
+        VideoSurface newVideoSurface = newUserVideo.GetComponent<VideoSurface>();
+        if (newVideoSurface == null)
+        {
+            return null;
+        }
+
+        if (isLocalUser == false)
+        {
+            newVideoSurface.SetForUser(uid);
+        }
+
+        newVideoSurface.SetGameFps(30);
+
+        currentUsers++;
+
+        return newVideoSurface;
+    }
+
+    private void OnApplicationQuit()
+    {
+        //currentUsers--;
+        if(mRtcEngine != null)
+        {
+            //mRtcEngine.LeaveChannel();
+            mRtcEngine = null;
+            IRtcEngine.Destroy();
+            
+        }
+    }
+}
