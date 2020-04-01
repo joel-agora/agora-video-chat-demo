@@ -40,17 +40,17 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
+    public void AllTest()
+    {
+        print(gameObject.name + " ALL Test"); // this called on each client, but acts as if the call came from the specific client that called it
+    }
+
+    [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
         print("I've been invited to join channel: " + channelName);
         joinButton.interactable = true;
-    }
-
-    [PunRPC]
-    public void AllTest()
-    {
-        print(gameObject.name + " ALL Test"); // this called on each client, but acts as if the call came from the specific client that called it
     }
 
     // this button press will always be local because the remote clients canvases are disabled
