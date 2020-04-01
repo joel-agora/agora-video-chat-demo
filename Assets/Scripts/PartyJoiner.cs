@@ -40,17 +40,11 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
-    public void AllTest()
-    {
-        print(gameObject.name + " ALL Test"); // this called on each client, but acts as if the call came from the specific client that called it
-    }
-
-    [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
-        print("I've been invited to join channel: " + channelName);
         joinButton.interactable = true;
+        print("I've been invited to join channel: " + channelName);
     }
 
     // this button press will always be local because the remote clients canvases are disabled
@@ -58,14 +52,14 @@ public class PartyJoiner : MonoBehaviour
     {
         if(remotePlayerID != -1)
         {
-            photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), "testChannel");
+            photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), GetComponent<AgoraVideoChat>().GetRemoteChannel());
         }
     }
 
     public void OnJoinButtonPress()
     {
         print("I'm going to join players channel: " + remoteInviteChannelName);
-        // AGORA COMPONENT.JoinChannel(remoteInviteChannelName);
+        GetComponent<AgoraVideoChat>().JoinRemoteChannel(remoteInviteChannelName);
     }
 
     // this scripts fire everywhere

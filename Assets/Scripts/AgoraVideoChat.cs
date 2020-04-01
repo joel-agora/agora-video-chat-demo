@@ -47,6 +47,27 @@ public class AgoraVideoChat : Photon.MonoBehaviour
         mRtcEngine.JoinChannel(channel, null, 0);
     }
 
+    public string GetRemoteChannel()
+    {
+        return channel;
+    }
+
+    public int JoinRemoteChannel(string remoteChannelName)
+    {
+        int joinSuccess = mRtcEngine.JoinChannel(remoteChannelName, null, myUID);
+
+        if(joinSuccess == 0)
+        {
+            print("successful join");
+        }
+        else
+        {
+            print("Join UNSUCCESSFUL");
+        }
+
+        return joinSuccess;
+    }
+
     // local client joins
     void OnJoinChannelSuccessHandler(string channelName, uint uid, int elapsed)
     {

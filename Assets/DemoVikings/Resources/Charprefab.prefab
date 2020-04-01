@@ -193,8 +193,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 11400010}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &11400010
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100006}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 011cfb7e7b533474eaae30c0a0194149, type: 3}
   m_Name: 
@@ -241,7 +241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inviteButton: {fileID: 4454070465173561753}
   joinButton: {fileID: 8200248810429918849}
-  remotePlayerName: 
+  remotePlayerID: 0
+  remoteInviteChannelName: 
 --- !u!135 &135247917694409704
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -270,7 +271,6 @@ MonoBehaviour:
   localGameObjects:
   - {fileID: 4024445271744060198}
   localComponents:
-  - {fileID: 114965449611606356}
   - {fileID: 114431670257695358}
 --- !u!1 &100008
 GameObject:
