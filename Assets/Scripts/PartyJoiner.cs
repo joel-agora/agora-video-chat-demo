@@ -51,25 +51,38 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
+    void Test()
+    {
+        print("FUCK");
+    }
+
+    [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
         joinButton.interactable = true;
         print("I've been invited to join channel: " + remoteInviteChannelName);
 
+        Test();
         JoinButtonTest();
     }
 
     [PunRPC]
     void JoinButtonTest()
     {
+        if(photonView.isMine)
+        {
+            print("isMine view: " + gameObject.name);
+        }
+        else
+        {
+            print("NOT my view: " + gameObject.name);
+        }
 
-            print(gameObject.name + " testing for join button");
-            joinButton.interactable = true;
-            print(joinButton.interactable);
+        print(gameObject.name + " testing for join button");
+        joinButton.interactable = true;
+        print(joinButton.interactable);
 
-            transform.GetChild(0).transform.GetChild(1).GetComponent<Button>().interactable = true;
-            print(joinButton.interactable);
 
     }
 
