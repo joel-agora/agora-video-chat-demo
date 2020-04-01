@@ -64,15 +64,13 @@ public class PartyJoiner : MonoBehaviour
     void JoinButtonTest()
     {
 
-        if(photonView.isMine)
-        {
             print(gameObject.name + " testing for join button");
             joinButton.interactable = true;
             print(joinButton.interactable);
 
             transform.GetChild(0).transform.GetChild(1).GetComponent<Button>().interactable = true;
             print(joinButton.interactable);
-        }
+
     }
 
     // this button press will always be local because the remote clients canvases are disabled
