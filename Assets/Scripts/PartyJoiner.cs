@@ -39,12 +39,46 @@ public class PartyJoiner : MonoBehaviour
         joinButton.interactable = false;
     }
 
+    private void OnEnable()
+    {
+        
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
+    [PunRPC]
+    public void MyEvent()
+    {
+        print("MY EVENT BITCH");
+    }
+
     [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
         joinButton.interactable = true;
-        print("I've been invited to join channel: " + channelName);
+        print("I've been invited to join channel: " + remoteInviteChannelName);
+
+        JoinButtonTest();
+        MyEvent();
+    }
+
+    void JoinButtonTest()
+    {
+
+        if(photonView.isMine)
+        {
+            print(gameObject.name + " testing for join button");
+            joinButton.interactable = true;
+            print(joinButton.interactable);
+
+            transform.GetChild(0).transform.GetChild(1).GetComponent<Button>().interactable = true;
+            print(joinButton.interactable);
+        }
     }
 
     // this button press will always be local because the remote clients canvases are disabled
