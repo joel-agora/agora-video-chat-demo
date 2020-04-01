@@ -51,12 +51,6 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
-    public void MyEvent()
-    {
-        print("MY EVENT BITCH");
-    }
-
-    [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
@@ -64,9 +58,9 @@ public class PartyJoiner : MonoBehaviour
         print("I've been invited to join channel: " + remoteInviteChannelName);
 
         JoinButtonTest();
-        MyEvent();
     }
 
+    [PunRPC]
     void JoinButtonTest()
     {
 
