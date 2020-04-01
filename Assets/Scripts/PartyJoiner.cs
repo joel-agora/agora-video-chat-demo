@@ -70,21 +70,13 @@ public class PartyJoiner : MonoBehaviour
     [PunRPC]
     void JoinButtonTest()// this is associated with whoever presses the button (PC)
     {
-        if(photonView.isMine)
-        {
-            print("isMine view: " + gameObject.name);
-        }
-
         if(!photonView.isMine)
         {
             print("NOT my view: " + gameObject.name);
+            print("join button= " + joinButton.interactable);
+            joinButton.interactable = true;
+            print("join button= " + joinButton.interactable);
         }
-
-        print(gameObject.name + " testing for join button");
-        joinButton.interactable = true;
-        print(joinButton.interactable);
-
-
     }
 
     // this button press will always be local because the remote clients canvases are disabled
