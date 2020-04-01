@@ -68,13 +68,14 @@ public class PartyJoiner : MonoBehaviour
     }
 
     [PunRPC]
-    void JoinButtonTest()
+    void JoinButtonTest()// this is associated with whoever presses the button (PC)
     {
         if(photonView.isMine)
         {
             print("isMine view: " + gameObject.name);
         }
-        else
+
+        if(!photonView.isMine)
         {
             print("NOT my view: " + gameObject.name);
         }
