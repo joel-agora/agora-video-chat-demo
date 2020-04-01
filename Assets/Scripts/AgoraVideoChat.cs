@@ -110,11 +110,16 @@ public class AgoraVideoChat : Photon.MonoBehaviour
     VideoSurface CreateUserVideoSurface(uint uid, Vector3 spawnPosition, bool isLocalUser)
     {
         if (!pView.isMine)
+        {
+            print("Photon view isn't mine: " + gameObject.name);
             return null;
+        }
+            
 
         GameObject newUserVideo = new GameObject(uid.ToString(), typeof(RawImage), typeof(VideoSurface));
         if(newUserVideo == null)
         {
+            print("new user video <GAMEOBJECT> couldn't be created: " + gameObject.name);
             return null;
         }
 
@@ -127,6 +132,7 @@ public class AgoraVideoChat : Photon.MonoBehaviour
         VideoSurface newVideoSurface = newUserVideo.GetComponent<VideoSurface>();
         if (newVideoSurface == null)
         {
+            print("new user video <VIDEOSURFACE> couldn't be created: " + gameObject.name);
             return null;
         }
 

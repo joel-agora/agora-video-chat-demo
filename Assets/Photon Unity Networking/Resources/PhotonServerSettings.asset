@@ -31,4 +31,5 @@ MonoBehaviour:
   - SendChatMessage
   - Test
   - AllTest
+  - InvitePlayerToPartyChannel
   DisableAutoOpenWizard: 1
