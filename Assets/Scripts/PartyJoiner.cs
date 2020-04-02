@@ -21,6 +21,7 @@ public class PartyJoiner : MonoBehaviour
     private Button joinButton;
     [SerializeField]
     private int remotePlayerID;
+    private int remoteButtonID;
 
     [SerializeField]
     private string remoteInviteChannelName;
@@ -39,44 +40,12 @@ public class PartyJoiner : MonoBehaviour
         joinButton.interactable = false;
     }
 
-    private void OnEnable()
-    {
-        
-        
-    }
-
-    private void OnDisable()
-    {
-        
-    }
-
-    [PunRPC]
-    void Test()
-    {
-        print(gameObject.name + " FUCK");
-    }
-
     [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
         joinButton.interactable = true;
         print("I've been invited to join channel: " + remoteInviteChannelName);
-
-        Test();
-        JoinButtonTest();
-    }
-
-    [PunRPC]
-    void JoinButtonTest()// this is associated with whoever presses the button (PC)
-    {
-        if(!photonView.isMine)
-        {
-            print("NOT my view: " + gameObject.name);
-            print("join button= " + joinButton.interactable);
-            joinButton.interactable = true;
-            print("join button= " + joinButton.interactable);
-        }
     }
 
     // this button press will always be local because the remote clients canvases are disabled
@@ -84,7 +53,16 @@ public class PartyJoiner : MonoBehaviour
     {
         if(remotePlayerID != -1)
         {
+            byte InviteEvent = 1;
+            object content = null;
+            int[] playerList = { PhotonPlayer.Find(remotePlayerID).ID };
+
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = playerList };
+
+            PhotonNetwork.RaiseEvent(InviteEvent, content, true, raiseEventOptions);
+
             photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), GetComponent<AgoraVideoChat>().GetRemoteChannel());
+            photonView.RPC("ButtonScript", )
         }
     }
 
@@ -107,6 +85,14 @@ public class PartyJoiner : MonoBehaviour
         {
             print("I bumped into: " + other.name);   
             remotePlayerID = PhotonView.Get(other.gameObject).ownerId;
+            //remoteButtonID = PhotonView.Get(other.transform.GetChild(0).GetChild(0)).ownerId;
+            //int testInt = 5000;
+            if(other.transform.GetChild(0).GetChild(0).name != null)
+            {
+                print(other.transform.GetChild(0).GetChild(0).name);
+            }
+
+
             inviteButton.interactable = true;
         }
     }
