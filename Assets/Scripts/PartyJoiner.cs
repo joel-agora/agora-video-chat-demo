@@ -21,6 +21,7 @@ public class PartyJoiner : MonoBehaviour
     private Button joinButton;
     [SerializeField]
     private int remotePlayerID;
+    [SerializeField]
     private int remoteButtonID;
 
     [SerializeField]
@@ -59,10 +60,10 @@ public class PartyJoiner : MonoBehaviour
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = playerList };
 
-            PhotonNetwork.RaiseEvent(InviteEvent, content, true, raiseEventOptions);
+            //PhotonNetwork.RaiseEvent(InviteEvent, content, true, raiseEventOptions);
 
             photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), GetComponent<AgoraVideoChat>().GetRemoteChannel());
-            //photonView.RPC("ButtonScript", PhotonPlayer.Find(remoteButtonID));
+            photonView.RPC("ButtonScript", PhotonPlayer.Find(remoteButtonID));
         }
     }
 
