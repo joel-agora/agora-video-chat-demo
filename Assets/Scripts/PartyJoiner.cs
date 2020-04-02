@@ -62,7 +62,7 @@ public class PartyJoiner : MonoBehaviour
             PhotonNetwork.RaiseEvent(InviteEvent, content, true, raiseEventOptions);
 
             photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), GetComponent<AgoraVideoChat>().GetRemoteChannel());
-            photonView.RPC("ButtonScript", PhotonPlayer.Find(remoteButtonID));
+            //photonView.RPC("ButtonScript", PhotonPlayer.Find(remoteButtonID));
         }
     }
 
@@ -83,9 +83,11 @@ public class PartyJoiner : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            print("I bumped into: " + other.name);   
+            //print("I bumped into: " + other.name);   
             remotePlayerID = PhotonView.Get(other.gameObject).ownerId;
             remoteButtonID = PhotonView.Get(other.transform.GetChild(0).GetChild(1)).ownerId;
+
+            print("button view PhotonViewID: " + remoteButtonID);
 
             inviteButton.interactable = true;
         }
