@@ -53,7 +53,7 @@ public class PartyJoiner : MonoBehaviour
     [PunRPC]
     void Test()
     {
-        print("FUCK");
+        print(gameObject.name + " FUCK");
     }
 
     [PunRPC]
