@@ -18,7 +18,7 @@ public class PartyJoiner : MonoBehaviour
     [SerializeField]
     private Button inviteButton;
     [SerializeField]
-    private Button joinButton;
+    private GameObject joinButton;
     [SerializeField]
     private int remotePlayerID;
     [SerializeField]
@@ -47,7 +47,7 @@ public class PartyJoiner : MonoBehaviour
     {
         remoteInviteChannelName = channelName;
         transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        joinButton.interactable = true;
+        // joinButton.SetActive(true);
         print("I've been invited to join channel: " + remoteInviteChannelName);
     }
 
@@ -64,8 +64,18 @@ public class PartyJoiner : MonoBehaviour
 
             //PhotonNetwork.RaiseEvent(InviteEvent, content, true, raiseEventOptions);
 
+            if(joinButton != null)
+            {
+                joinButton.SendMessage("ButtonScript", joinButton, SendMessageOptions.RequireReceiver);
+            }
+            else
+            {
+                print("NO JOIN BUTTON");
+            }
+
+
             photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), GetComponent<AgoraVideoChat>().GetRemoteChannel());
-            photonView.RPC("ButtonScript", PhotonPlayer.Find(remoteButtonID));
+            //photonView.RPC("ButtonScript", PhotonPlayer.Find(remoteButtonID));
         }
     }
 
