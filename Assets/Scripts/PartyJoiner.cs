@@ -89,7 +89,7 @@ public class PartyJoiner : MonoBehaviour
             //int testInt = 5000;
             if(other.transform.GetChild(0).GetChild(0).name != null)
             {
-                print(other.transform.GetChild(0).GetChild(0).name);
+                print(other.transform.GetChild(0).GetChild(1).name + " of " + other.transform.name);
             }
 
 
