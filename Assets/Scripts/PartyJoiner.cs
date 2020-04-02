@@ -62,7 +62,7 @@ public class PartyJoiner : MonoBehaviour
             PhotonNetwork.RaiseEvent(InviteEvent, content, true, raiseEventOptions);
 
             photonView.RPC("InvitePlayerToPartyChannel", PhotonPlayer.Find(remotePlayerID), GetComponent<AgoraVideoChat>().GetRemoteChannel());
-            photonView.RPC("ButtonScript", )
+            //photonView.RPC("ButtonScript", )
         }
     }
 
