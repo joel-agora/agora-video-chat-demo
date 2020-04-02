@@ -38,13 +38,15 @@ public class PartyJoiner : MonoBehaviour
         }
 
         inviteButton.interactable = false;
-        joinButton.interactable = false;
+        joinButton.gameObject.SetActive(false);
+        //joinButton.interactable = false;
     }
 
     [PunRPC]
     public void InvitePlayerToPartyChannel(string channelName)
     {
         remoteInviteChannelName = channelName;
+        transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         joinButton.interactable = true;
         print("I've been invited to join channel: " + remoteInviteChannelName);
     }
